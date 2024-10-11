@@ -98,7 +98,15 @@ abstract class BaseClipboard implements Contracts\Clipboard
      */
     public function getAbilities(Model $authority, $allowed = true)
     {
-        return Abilities::forAuthority($authority, $allowed)->get();
+        $start = microtime(true);
+
+        $data = Abilities::forAuthority($authority, $allowed)->get();
+
+        $end = microtime(true);
+
+        logger()->info('Time for Abilities Query', ['time' => $end - $start]);
+
+        return $data;
     }
 
     /**
